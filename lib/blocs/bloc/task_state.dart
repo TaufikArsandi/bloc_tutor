@@ -7,3 +7,7 @@ class TasksState extends Equatable {
   @override
   List<Object> get props => [allTasks];
 }
+
+class LoadingTasksState extends TasksState {}
+
+class LoadedTasksState extends TasksState {}

@@ -19,6 +19,7 @@ class AddTaskScreen extends StatelessWidget {
         ),
         TextField(
           controller: titleController,
+          autocorrect: false,
           autofocus: true,
           decoration: const InputDecoration(
               label: Text("Title"), border: OutlineInputBorder()),

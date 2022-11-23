@@ -11,15 +11,21 @@ class TaskBloc extends Bloc<TasksEvent, TasksState> {
     on<AddTask>(_onAddTask);
     on<UpdateTask>(_onUpdateTask);
     on<DeleteTask>(_onDeleteTask);
+    on<LoadingTask>(_onLoading);
   }
 
-  void _onLoading(LoadingTask event, Emitter<TasksState> emit) {}
+  void _onLoading(LoadingTask event, Emitter<TasksState> emit) async {
+    await Future.delayed(const Duration(seconds: 5));
+    emit(LoadedTasksState());
+  }
 
   void _onAddTask(AddTask event, Emitter<TasksState> emit) {
     print("===>> ADD");
     final state = this.state;
     print(state);
     emit(TasksState(allTasks: List.from(state.allTasks)..add(event.task)));
+    print('===>>');
+    print(emit.toString());
   }
 
   void _onUpdateTask(UpdateTask event, Emitter<TasksState> emit) {
