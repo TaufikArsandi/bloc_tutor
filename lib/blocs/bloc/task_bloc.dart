@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_tasks_app/models/task.dart';
@@ -6,16 +8,18 @@ part 'task_event.dart';
 part 'task_state.dart';
 
 class TaskBloc extends Bloc<TasksEvent, TasksState> {
-  TaskBloc() : super(const TasksState()) {
+  TaskBloc() : super(LoadingTasksState()) {
     /// Get Event from UI to Bloc
     on<AddTask>(_onAddTask);
     on<UpdateTask>(_onUpdateTask);
     on<DeleteTask>(_onDeleteTask);
-    on<LoadingTask>(_onLoading);
+    on<StartedTask>(_onStarted);
   }
 
-  void _onLoading(LoadingTask event, Emitter<TasksState> emit) async {
-    await Future.delayed(const Duration(seconds: 5));
+  void _onStarted(StartedTask event, Emitter<TasksState> emit) async {
+    print("OK");
+    emit(LoadingTasksState());
+    await Future.delayed(Duration(seconds: 4));
     emit(LoadedTasksState());
   }
 
@@ -24,8 +28,6 @@ class TaskBloc extends Bloc<TasksEvent, TasksState> {
     final state = this.state;
     print(state);
     emit(TasksState(allTasks: List.from(state.allTasks)..add(event.task)));
-    print('===>>');
-    print(emit.toString());
   }
 
   void _onUpdateTask(UpdateTask event, Emitter<TasksState> emit) {

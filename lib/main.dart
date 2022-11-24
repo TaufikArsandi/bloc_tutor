@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TaskBloc(),
+      create: (context) => TaskBloc()..add(StartedTask()),
       child: MaterialApp(
         title: 'Flutter Tasks App',
         theme: ThemeData(

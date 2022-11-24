@@ -27,22 +27,41 @@ class _TasksScreenState extends State<TasksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TaskBloc, TasksState>(
-      builder: (context, state) {
-        List<Task> tasksList = state.allTasks;
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('Tasks App'),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  _addTask(context);
-                },
-                icon: const Icon(Icons.add),
-              )
-            ],
-          ),
-          body: Column(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Tasks App'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _addTask(context);
+            },
+            icon: const Icon(Icons.add),
+          )
+        ],
+      ),
+      body: BlocBuilder<TaskBloc, TasksState>(
+        builder: (context, state) {
+          List<Task> tasksList = state.allTasks;
+          print("==>> ${state}");
+          if (state is LoadingTasksState) {
+            print("======>>>");
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is LoadedTasksState) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Center(
+                  child: Chip(
+                    label: Text(
+                      'Tasks:',
+                    ),
+                  ),
+                ),
+                TasksList(taskList: tasksList)
+              ],
+            );
+          }
+          return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Center(
@@ -54,16 +73,16 @@ class _TasksScreenState extends State<TasksScreen> {
               ),
               TasksList(taskList: tasksList)
             ],
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              _addTask(context);
-            },
-            tooltip: 'Add Task',
-            child: const Icon(Icons.add),
-          ),
-        );
-      },
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _addTask(context);
+        },
+        tooltip: 'Add Task',
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

@@ -10,4 +10,12 @@ class TasksState extends Equatable {
 
 class LoadingTasksState extends TasksState {}
 
-class LoadedTasksState extends TasksState {}
+class LoadedTasksState extends TasksState {
+  final List<Task> allTasksLoaded;
+  const LoadedTasksState({this.allTasksLoaded = const <Task>[]});
+
+  @override
+  List<Object> get props => [allTasksLoaded];
+}
+
+class ErrorTasksState extends TasksState {}
