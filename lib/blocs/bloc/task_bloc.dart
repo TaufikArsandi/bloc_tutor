@@ -8,7 +8,7 @@ part 'task_event.dart';
 part 'task_state.dart';
 
 class TaskBloc extends Bloc<TasksEvent, TasksState> {
-  TaskBloc() : super(LoadingTasksState()) {
+  TaskBloc() : super(const TasksState()) {
     /// Get Event from UI to Bloc
     on<AddTask>(_onAddTask);
     on<UpdateTask>(_onUpdateTask);
@@ -20,7 +20,7 @@ class TaskBloc extends Bloc<TasksEvent, TasksState> {
     print("OK");
     emit(LoadingTasksState());
     await Future.delayed(Duration(seconds: 4));
-    emit(LoadedTasksState());
+    emit(const LoadedTasksState());
   }
 
   void _onAddTask(AddTask event, Emitter<TasksState> emit) {

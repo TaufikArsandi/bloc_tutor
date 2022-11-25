@@ -46,20 +46,6 @@ class _TasksScreenState extends State<TasksScreen> {
           if (state is LoadingTasksState) {
             print("======>>>");
             return const Center(child: CircularProgressIndicator());
-          } else if (state is LoadedTasksState) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Center(
-                  child: Chip(
-                    label: Text(
-                      'Tasks:',
-                    ),
-                  ),
-                ),
-                TasksList(taskList: tasksList)
-              ],
-            );
           }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
